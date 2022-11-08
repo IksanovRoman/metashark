@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 
@@ -30,17 +31,15 @@ class Subject(models.Model):
 
 
 class Curator(models.Model):
-    first_name = models.CharField(max_length=50, blank=False, verbose_name="Имя")
-    last_name = models.CharField(max_length=50, blank=False, verbose_name="Фамилия")
-    patronymic = models.CharField(max_length=50, blank=True, verbose_name="Отчество")
     direction_of_studying = models.OneToOneField(Direction_of_studying,
                                                  on_delete=models.SET_NULL,
                                                  blank=True,
                                                  null=True,
                                                  verbose_name="Направление")
+    user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name="Куратор", blank=True, null=True)
 
     def __str__(self):
-        return self.first_name + " " + self.last_name
+        return str("Куратор")
 
     class Meta:
         verbose_name = "Куратор"
@@ -67,8 +66,10 @@ class Student(models.Model):
 
 
 class Education_group(models.Model):
-    group_number = models.IntegerField(unique=True, validators=[MinValueValidator(limit_value=1),
-                                                                MaxValueValidator(limit_value=500)], blank=False,
+    group_number = models.IntegerField(unique=True,
+                                       validators=[MinValueValidator(limit_value=1),
+                                                   MaxValueValidator(limit_value=500)],
+                                       blank=False,
                                        verbose_name="Номер группы")
     direction = models.ForeignKey("Direction_of_studying", on_delete=models.CASCADE, blank=False,
                                   verbose_name="Направление")

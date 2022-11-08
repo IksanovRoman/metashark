@@ -1,12 +1,11 @@
 from rest_framework import serializers
-
 from university.models import *
 
 
 class DirectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Direction_of_studying
-        fields = "__all__"
+        fields = ("id", "direction")
 
 
 class SubjectSerializerView(serializers.ModelSerializer):
@@ -20,4 +19,33 @@ class SubjectSerializerView(serializers.ModelSerializer):
 class SubjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Subject
+        fields = "__all__"
+
+
+class GroupSerializerCreateView(serializers.ModelSerializer):
+    direction = DirectionSerializer()
+
+    class Meta:
+        model = Education_group
+        fields = ("id", "group_number", "direction")
+
+
+class GroupSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Education_group
+        fields = "__all__"
+
+
+class StudentSerializerView(serializers.ModelSerializer):
+    studying_group = GroupSerializerCreateView()
+
+    class Meta:
+        model = Student
+        fields = ("id", "first_name", "last_name", "patronymic", "studying_group")
+        depth = 2
+
+
+class StudentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Student
         fields = "__all__"
