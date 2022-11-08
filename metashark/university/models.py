@@ -16,10 +16,10 @@ class Direction_of_studying(models.Model):
 
 class Subject(models.Model):
     subject_name = models.CharField(max_length=255, blank=False, unique=True, verbose_name="Предмет")
-    direction = models.ForeignKey(Direction_of_studying,
-                                  on_delete=models.CASCADE,
-                                  blank=False,
-                                  verbose_name="Направление")
+    direction_name = models.ForeignKey(Direction_of_studying,
+                                       on_delete=models.CASCADE,
+                                       blank=False,
+                                       verbose_name="Направление")
 
     def __str__(self):
         return self.subject_name
@@ -71,7 +71,7 @@ class Education_group(models.Model):
                                                                 MaxValueValidator(limit_value=500)], blank=False,
                                        verbose_name="Номер группы")
     direction = models.ForeignKey("Direction_of_studying", on_delete=models.CASCADE, blank=False,
-                                     verbose_name="Направление")
+                                  verbose_name="Направление")
 
     def __str__(self):
         return str(self.group_number)

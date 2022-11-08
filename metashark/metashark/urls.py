@@ -21,5 +21,8 @@ from university.views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('direction/', DirectionAPIViewCreate.as_view(), name="directions_view"),
-    path('direction/<int:pk>/', DirectionAPIUpdateDestroy.as_view(), name="directions_update"),
+    path('direction/<int:pk>/', DirectionAPIUpdateDestroy.as_view(), name="directions_update_destroy"),
+    path('subject/', SubjectAPIView.as_view(), name="subject_view"),
+    path('subject/create/', SubjectAPICreate.as_view(), name="subject_create"),
+    path('subject/<int:pk>/', SubjectAPIUpdateDestroy.as_view(), name="subject_update_destroy"),
 ]

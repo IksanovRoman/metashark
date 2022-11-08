@@ -9,8 +9,8 @@ class Direction_of_studyingAdmin(admin.ModelAdmin):
 
 
 class SubjectAdmin(admin.ModelAdmin):
-    list_display = ("subject_name", "direction")
-    ordering = ["direction", ]
+    list_display = ("subject_name", "direction_name")
+    ordering = ["direction_name", ]
 
 
 class CuratorAdmin(admin.ModelAdmin):
