@@ -16,6 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from university.views import *
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('direction/', DirectionAPIViewCreate.as_view(), name="directions_view"),
+    path('direction/<int:pk>/', DirectionAPIUpdateDestroy.as_view(), name="directions_update"),
 ]

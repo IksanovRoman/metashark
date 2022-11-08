@@ -5,7 +5,7 @@ from .models import *
 
 # Register your models here.
 class Direction_of_studyingAdmin(admin.ModelAdmin):
-    list_display = ("direction_of_studying",)
+    list_display = ("direction",)
 
 
 class SubjectAdmin(admin.ModelAdmin):

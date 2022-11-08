@@ -4,11 +4,10 @@ from django.db import models
 
 # Create your models here.
 class Direction_of_studying(models.Model):
-    direction_of_studying = models.CharField(max_length=255, blank=False, unique=True,
-                                             verbose_name="Направление подготовки")
+    direction = models.CharField(max_length=255, blank=False, unique=True, verbose_name="Направление подготовки")
 
     def __str__(self):
-        return self.direction_of_studying
+        return self.direction
 
     class Meta:
         verbose_name = "Направление подготовки"
@@ -56,7 +55,8 @@ class Student(models.Model):
                                        on_delete=models.SET_NULL,
                                        null=True,
                                        blank=True,
-                                       verbose_name="Учебная группа")
+                                       verbose_name="Учебная группа",
+                                       )
 
     def __str__(self):
         return self.first_name + " " + self.last_name
@@ -70,7 +70,7 @@ class Education_group(models.Model):
     group_number = models.IntegerField(unique=True, validators=[MinValueValidator(limit_value=1),
                                                                 MaxValueValidator(limit_value=500)], blank=False,
                                        verbose_name="Номер группы")
-    direction = models.OneToOneField("Direction_of_studying", on_delete=models.CASCADE, blank=False,
+    direction = models.ForeignKey("Direction_of_studying", on_delete=models.CASCADE, blank=False,
                                      verbose_name="Направление")
 
     def __str__(self):
