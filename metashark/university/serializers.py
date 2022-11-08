@@ -44,8 +44,14 @@ class StudentSerializerView(serializers.ModelSerializer):
         fields = ("id", "first_name", "last_name", "patronymic", "studying_group")
         depth = 2
 
-
-class StudentSerializer(serializers.ModelSerializer):
+class Student2(serializers.ModelSerializer):
     class Meta:
         model = Student
         fields = "__all__"
+
+
+class StudentSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Student
+        fields = ("first_name", "last_name", "patronymic", "studying_group")

@@ -1,8 +1,11 @@
+from django.forms import model_to_dict
 from django.shortcuts import render
 
 # Create your views here.
 from rest_framework.generics import *
 from rest_framework.permissions import *
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from university.models import *
 from university.permissions import IsAdminOrReadOnly
@@ -46,7 +49,12 @@ class StudentAPIView(ListAPIView):
 class StudentAPICreate(CreateAPIView):
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
-    permission_classes = (IsAuthenticated,)
+
+    def perform_create(self, serializer):
+        queryset = Student.objects.filter(studying_group=self.request.data['studying_group']).count()
+        if queryset > 20:
+            raise ValidationError('В этой группе 20 человек')
+        serializer.save()
 
 
 class StudentAPIUpdateDestroy(RetrieveUpdateDestroyAPIView):
@@ -54,15 +62,18 @@ class StudentAPIUpdateDestroy(RetrieveUpdateDestroyAPIView):
     serializer_class = StudentSerializer
     permission_classes = (IsAuthenticated,)
 
+
 class GroupAPIView(ListAPIView):
     queryset = Education_group.objects.all()
     serializer_class = GroupSerializerCreateView
     permission_classes = (IsAuthenticatedOrReadOnly,)
 
+
 class GroupAPICreate(CreateAPIView):
     queryset = Education_group.objects.all()
     serializer_class = GroupSerializer
     permission_classes = (IsAuthenticatedOrReadOnly,)
+
 
 class GroupAPIUpdateDestroy(RetrieveUpdateDestroyAPIView):
     queryset = Education_group.objects.all()
