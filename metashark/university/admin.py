@@ -14,7 +14,7 @@ class SubjectAdmin(admin.ModelAdmin):
 
 
 class CuratorAdmin(admin.ModelAdmin):
-    list_display = ("user", "direction_of_studying", )
+    list_display = ("first_name", "last_name", "user", "direction_of_studying", )
 
 
 class StudentAdmin(admin.ModelAdmin):

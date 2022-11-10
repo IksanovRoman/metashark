@@ -20,7 +20,8 @@ class Subject(models.Model):
     direction_name = models.ForeignKey(Direction_of_studying,
                                        on_delete=models.CASCADE,
                                        blank=False,
-                                       verbose_name="Направление")
+                                       verbose_name="Направление",
+                                       related_name='get_dir')
 
     def __str__(self):
         return self.subject_name
@@ -31,15 +32,18 @@ class Subject(models.Model):
 
 
 class Curator(models.Model):
+    first_name = models.CharField(max_length=50, blank=False, verbose_name="Имя")
+    last_name = models.CharField(max_length=50, blank=False, verbose_name="Фамилия")
+    patronymic = models.CharField(max_length=50, blank=True, verbose_name="Отчество")
     direction_of_studying = models.OneToOneField(Direction_of_studying,
                                                  on_delete=models.SET_NULL,
-                                                 blank=True,
                                                  null=True,
-                                                 verbose_name="Направление")
+                                                 verbose_name="Направление",
+                                                 related_name='get_curator',)
     user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name="Куратор", blank=True, null=True)
 
     def __str__(self):
-        return str("Куратор")
+        return self.first_name + " " + self.last_name
 
     class Meta:
         verbose_name = "Куратор"
