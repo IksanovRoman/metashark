@@ -21,7 +21,7 @@ from university.views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/', include('rest_framework.urls')),
-    path('', excel, name='excel'),
+    path('report/', get_report, name='get_report'),
     path('direction/', DirectionAPIViewCreate.as_view(), name="directions_view"),
     path('direction/<int:pk>/', DirectionAPIUpdateDestroy.as_view(), name="directions_update_destroy"),
     path('subject/', SubjectAPIView.as_view(), name="subject_view"),
