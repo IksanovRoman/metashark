@@ -1,0 +1,4 @@
+docker-compose up --build
+
+во втором окне:
+docker-compose exec app python manage.py createsuperuser
